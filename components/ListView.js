@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   TouchableHighlight,
+  ActivityIndicator,
 } from 'react-native';
 import axios from 'axios';
 
@@ -15,39 +16,37 @@ function ListView() {
     axios
       .get('https://randomapi.com/api/6de6abfedb24f889e0b5f675edc50deb')
       .then((res) => {
-        console.warn(res.data.results);
+        // console.warn(res.data.results);
         setPosts(res.data.results);
         setLoading(false);
       })
       .catch((err) => {
         setLoading(true);
-        console.log(err);
+        console.warn(err);
       });
   }, []);
 
-  const renderItem = ({item}) => {
-    <View key={item.first}>
+  const RenderItem = ({item}) => {
+    // console.log(item.first);
+    return (
       <TouchableHighlight>
         <View>
           <Text>{item.first}</Text>
           <Text>{item.last}</Text>
         </View>
       </TouchableHighlight>
-    </View>;
+    );
   };
 
   return (
     <View>
       {loading ? (
-        <Text>Loading...</Text>
+        <ActivityIndicator />
       ) : (
         <FlatList
-          style={styles.list}
           data={posts}
-          keyExtractor={(item, index) => item.key}
-          renderItem={(item) => {
-            renderItem(item);
-          }}
+          renderItem={({item}) => <RenderItem item={item} />}
+          keyExtractor={(item) => item.first}
         />
       )}
     </View>
