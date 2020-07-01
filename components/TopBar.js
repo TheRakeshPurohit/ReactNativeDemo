@@ -27,7 +27,6 @@ function TopBar() {
         style={styles.profile}
         source={{uri: 'https://randomuser.me/api/portraits/men/2.jpg'}}
       />
-
       <TouchableOpacity
         style={styles.btnsearch}
         onPress={() => setModalOpen(!modalOpen)}>

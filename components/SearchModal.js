@@ -1,11 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, Dimensions, TextInput} from 'react-native';
 
 function SearchModal() {
+  const [searchedFor, setSearchedFor] = useState('');
+
+  //const textModified = () => {};
+
   return (
     <View style={styles.modal}>
       <View style={styles.searchbox}>
-        <TextInput style={styles.searchinputbox} placeholder="Search" />
+        <TextInput
+          //autoFocus={true}
+          style={styles.searchinputbox}
+          placeholder="Search"
+          value={searchedFor}
+          onChange={(e) => {
+            setSearchedFor(e.target.value);
+          }}
+        />
       </View>
     </View>
   );
@@ -18,12 +30,16 @@ const styles = StyleSheet.create({
   },
   searchbox: {
     marginTop: '20%',
+    width: '84%',
+    marginLeft: 9,
   },
   searchinputbox: {
     //backgroundColor: 'red',
     borderBottomColor: 'black',
     borderBottomWidth: 2,
-    margin: '5%',
+    fontSize: 35,
+    fontWeight: 'bold',
+    //margin: '5%',
   },
 });
 

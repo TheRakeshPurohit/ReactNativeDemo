@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   h2: {
-    fontSize: 25,
+    marginLeft: 15,
+    fontSize: 15,
   },
   title: {
     //flex: 2,

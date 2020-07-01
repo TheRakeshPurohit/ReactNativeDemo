@@ -29,7 +29,6 @@ function ListView() {
   }, []);
 
   const RenderItem = ({item}) => {
-    // setId(id + 1);
     return (
       <TouchableOpacity style={styles.item}>
         <ListItem
@@ -39,7 +38,7 @@ function ListView() {
           }}
           title={`${item.first} ${item.last}`}
           subtitle={'7 AM'}
-          rightIcon={{name: 'edit', size: 30}}
+          rightIcon={{type: 'Feather', name: 'edit', size: 30}}
         />
       </TouchableOpacity>
     );
