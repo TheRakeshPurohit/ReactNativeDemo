@@ -1,34 +1,22 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   StyleSheet,
   View,
   FlatList,
+  Text,
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import axios from 'axios';
 import {ListItem} from 'react-native-elements';
+import {PostsContext} from './HomeScreen';
 
 function ListView() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const postsContext = useContext(PostsContext);
+  //const [loading, setLoading] = useState(false);
   const [id] = useState(1);
 
-  useEffect(() => {
-    axios
-      .get('https://www.randomapi.com/api/6de6abfedb24f889e0b5f675edc50deb')
-      .then((res) => {
-        //console.log(res.data.results[0]);
-        setPosts(res.data.results[0]);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(true);
-        console.warn(err);
-      });
-  }, []);
-
   const RenderItem = ({item}) => {
+    //setLoading(false);
     return (
       <TouchableOpacity style={styles.item}>
         <ListItem
@@ -37,24 +25,33 @@ function ListView() {
             source: {uri: `https://randomuser.me/api/portraits/men/${id}.jpg`},
           }}
           title={`${item.first} ${item.last}`}
-          subtitle={'7 AM'}
+          subtitle={
+            <View>
+              <Text>{item.address}</Text>
+              <Text>{item.created}</Text>
+            </View>
+          }
           rightIcon={{type: 'Feather', name: 'edit', size: 30}}
         />
       </TouchableOpacity>
     );
   };
 
+  const renderSeparator = () => {
+    return <View style={styles.renderSeparator} />;
+  };
+
   return (
     <View style={styles.list}>
-      {loading ? (
+      {/* {loading ? (
         <ActivityIndicator />
-      ) : (
-        <FlatList
-          data={posts}
-          renderItem={({item}) => <RenderItem item={item} />}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      )}
+      ) : ( */}
+      <FlatList
+        data={postsContext.postObj}
+        renderItem={({item}) => <RenderItem item={item} />}
+        keyExtractor={(item, index) => index.toString()}
+        ItemSeparatorComponent={renderSeparator}
+      />
     </View>
   );
 }
@@ -62,6 +59,11 @@ function ListView() {
 const styles = StyleSheet.create({
   list: {
     //backgroundColor: 'red',
+  },
+  renderSeparator: {
+    height: 1,
+    backgroundColor: 'black',
+    width: '100%',
   },
   item: {
     width: '100%',
