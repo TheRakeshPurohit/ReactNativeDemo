@@ -6,10 +6,8 @@ function App() {
   return (
     <View>
       <HomeScreen />
-      {/* <Home /> */}
     </View>
   );
 }
-
 
 export default App;

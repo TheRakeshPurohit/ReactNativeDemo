@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Modal,
-  Alert,
-  View,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Modal, View, Image, TouchableOpacity} from 'react-native';
 import SearchModal from './SearchModal';
 
 function TopBar() {
@@ -18,7 +11,6 @@ function TopBar() {
         transparent={false}
         visible={modalOpen}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setModalOpen(!modalOpen);
         }}>
         <SearchModal />

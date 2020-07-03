@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -13,11 +13,12 @@ import {PostsContext} from './HomeScreen';
 import {ListItem} from 'react-native-elements';
 
 function SearchModal() {
+  const ref = useRef();
   const [searchedFor, setSearchedFor] = useState('');
   const postsContext = useContext(PostsContext);
   const [loading, setLoading] = useState(false);
   const [id] = useState(1);
-  const [arrayholder] = useState([]);
+  const [searchlist, setSearchlist] = useState([]);
 
   const RenderItem = ({item}) => {
     setLoading(false);
@@ -41,17 +42,34 @@ function SearchModal() {
   };
 
   const searchFilterFunction = (text) => {
-    setSearchedFor(text);
-    const newData = arrayholder.filter((item) => {
+    ref.current.focus();
+    console.log(text); //prints input text on changetext
+    const newData = searchlist.filter((item) => {
+      console.log(item);
       const itemData = `${item.first.toUpperCase()} ${item.last.toUpperCase()}`;
       const textData = text.toUpperCase();
+
+      console.log(textData); // no log
+      console.log(itemData); // no log
+      console.log(item.first); // no log
       return itemData.indexOf(textData) >= 0;
     });
-    postsContext.postfunc(newData);
+    console.log(newData); // no log
+
+    //postsContext.postfunc(newData);
+    setSearchlist(newData);
+    setSearchedFor(text);
   };
 
-  const renderHeader = () => {
-    return (
+  const renderSeparator = () => {
+    return <View style={styles.renderSeparator} />;
+  };
+
+  useEffect(() => {
+    setSearchlist(postsContext.postObj);
+  }, [postsContext.postObj]);
+  return (
+    <View style={styles.modal}>
       <View style={styles.searchbox}>
         <TextInput
           autoFocus={true}
@@ -59,27 +77,20 @@ function SearchModal() {
           placeholder="Search"
           value={searchedFor}
           onChangeText={(text) => searchFilterFunction(text)}
+          ref={ref}
         />
       </View>
-    );
-  };
-
-  const renderSeparator = () => {
-    return <View style={styles.renderSeparator} />;
-  };
-
-  return (
-    <View style={styles.modal}>
       <View style={styles.list}>
         {loading ? (
           <ActivityIndicator />
         ) : (
           <FlatList
-            data={postsContext.postObj}
-            renderItem={({item}) => <RenderItem item={item} />}
-            extraData={postsContext.postObj}
+            data={searchlist}
+            //renderItem={({item}) => <RenderItem item={item} />}
+            renderItem={RenderItem}
+            extraData={searchlist}
             keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={renderHeader}
+            //ListHeaderComponent={renderHeader}
             ItemSeparatorComponent={renderSeparator}
           />
         )}

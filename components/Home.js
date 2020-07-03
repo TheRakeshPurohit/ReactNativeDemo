@@ -1,125 +1,123 @@
+//This is an example code to Add Search Bar Filter on Listview//
 import React, {Component} from 'react';
-import {View, FlatList, ActivityIndicator, Button} from 'react-native';
-import {ListItem, SearchBar} from 'react-native-elements';
+//import react in our code.
 
-var id = 0;
+import {
+  Text,
+  StyleSheet,
+  View,
+  FlatList,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native';
+//import all the components we are going to use.
 
 class Home extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      loading: false,
-      data: [],
-      error: null,
-    };
-
+    //setting default state
+    this.state = {isLoading: true, text: ''};
     this.arrayholder = [];
   }
 
-  componentDidMount() {
-    this.makeRemoteRequest();
+  async componentDidMount() {
+    try {
+      const response = await fetch(
+        'https://jsonplaceholder.typicode.com/posts',
+      );
+      const responseJson = await response.json();
+      this.setState(
+        {
+          isLoading: false,
+          dataSource: responseJson,
+        },
+        function () {
+          this.arrayholder = responseJson;
+        },
+      );
+    } catch (error) {
+      console.error(error);
+    }
   }
-
-  makeRemoteRequest = () => {
-    const url = 'https://randomapi.com/api/6de6abfedb24f889e0b5f675edc50deb';
-    this.setState({loading: true});
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({
-          data: res.results,
-          error: res.error || null,
-          loading: false,
-        });
-        //console.warn(this.state.data);
-        this.arrayholder = res.results;
-      })
-      .catch((error) => {
-        this.setState({error, loading: false});
-      });
-  };
-
-  renderSeparator = () => {
+  SearchFilterFunction(text) {
+    //passing the inserted text in textinput
+    const newData = this.arrayholder.filter(function (item) {
+      //applying filter for the inserted text in search bar
+      const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    });
+    this.setState({
+      //setting the filtered newData on datasource
+      //After setting the data it will automatically re-render the view
+      dataSource: newData,
+      text: text,
+    });
+  }
+  ListViewItemSeparator = () => {
+    //Item sparator view
     return (
       <View
         style={{
-          height: 1,
-          backgroundColor: 'black',
-          width: '100%',
+          height: 0.3,
+          width: '90%',
+          backgroundColor: '#080808',
         }}
       />
     );
   };
-
-  searchFilterFunction = (text) => {
-    this.setState({
-      value: text,
-    });
-
-    const newData = this.arrayholder.filter((item) => {
-      const itemData = `${item.first.toUpperCase()} ${item.last.toUpperCase()}`;
-      const textData = text.toUpperCase();
-
-      return itemData.indexOf(textData) > -1;
-    });
-    this.setState({
-      data: newData,
-    });
-  };
-
-  renderHeader = () => {
-    return (
-      <SearchBar
-        placeholder="Search"
-        lightTheme
-        round
-        onChangeText={(text) => this.searchFilterFunction(text)}
-        autoCorrect={false}
-        value={this.state.value}
-      />
-    );
-  };
-
   render() {
-    if (this.state.loading) {
-      if (this.state.data === null) {
-        return (
-          <View
-            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <ActivityIndicator />
-          </View>
-        );
-      }
+    if (this.state.isLoading) {
+      //Loading View while data is loading
+      return (
+        <View style={{flex: 1, paddingTop: 20}}>
+          <ActivityIndicator />
+        </View>
+      );
     }
     return (
-      <View style={{flex: 1}}>
-        <Button
-          title="Add New Employee"
-          //   onPress={() => this.props.navigation.navigate('NewUser')}
+      //ListView to show with textinput used as search bar
+      <View style={styles.viewStyle}>
+        <TextInput
+          style={styles.textInputStyle}
+          onChangeText={(text) => this.SearchFilterFunction(text)}
+          value={this.state.text}
+          underlineColorAndroid="transparent"
+          placeholder="Search Here"
         />
         <FlatList
-          data={this.state.data}
+          data={this.state.dataSource}
+          ItemSeparatorComponent={this.ListViewItemSeparator}
           renderItem={({item}) => (
-            <ListItem
-              leftAvatar={{
-                source: {
-                  uri: 'https://randomuser.me/api/portraits/men/' + id + '.jpg',
-                },
-              }}
-              title={`${item.first} ${item.last}`}
-              subtitle={item.email}
-            />
+            <Text style={styles.textStyle}>{item.title}</Text>
           )}
+          extraData={this.state.dataSource}
+          //enableEmptySections={true}
+          style={{marginTop: 10}}
           keyExtractor={(item, index) => index.toString()}
-          extraData={this.state.data}
-          ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
         />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  viewStyle: {
+    justifyContent: 'center',
+    flex: 1,
+    marginTop: 40,
+    padding: 16,
+  },
+  textStyle: {
+    padding: 10,
+  },
+  textInputStyle: {
+    height: 40,
+    borderWidth: 1,
+    paddingLeft: 10,
+    borderColor: '#009688',
+    backgroundColor: '#FFFFFF',
+  },
+});
 
 export default Home;
