@@ -6,11 +6,13 @@ import {
   Text,
   ActivityIndicator,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {PostsContext} from './HomeScreen';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-function ListView() {
+function ListView({navigation}) {
   const postsContext = useContext(PostsContext);
   //const [loading, setLoading] = useState(false);
   const [id] = useState(1);
@@ -18,7 +20,9 @@ function ListView() {
   const RenderItem = ({item}) => {
     //setLoading(false);
     return (
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => navigation.navigate('Details', item)}>
         <ListItem
           style={styles.card}
           leftAvatar={{
@@ -42,23 +46,25 @@ function ListView() {
   };
 
   return (
-    <View style={styles.list}>
-      {/* {loading ? (
+    <SafeAreaView>
+      <View style={styles.list}>
+        {/* {loading ? (
         <ActivityIndicator />
       ) : ( */}
-      <FlatList
-        data={postsContext.postObj}
-        renderItem={({item}) => <RenderItem item={item} />}
-        keyExtractor={(item, index) => index.toString()}
-        ItemSeparatorComponent={renderSeparator}
-      />
-    </View>
+        <FlatList
+          data={postsContext.postObj}
+          renderItem={({item}) => <RenderItem item={item} />}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={renderSeparator}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   list: {
-    //backgroundColor: 'red',
+    //backgroundColor: 'blue',
   },
   renderSeparator: {
     height: 1,
