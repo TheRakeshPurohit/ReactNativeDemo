@@ -1,16 +1,7 @@
 import React, {useState, useContext} from 'react';
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  Text,
-  ActivityIndicator,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {StyleSheet, View, FlatList, Text, TouchableOpacity} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {PostsContext} from './HomeScreen';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 function ListView({navigation}) {
   const postsContext = useContext(PostsContext);
@@ -46,19 +37,17 @@ function ListView({navigation}) {
   };
 
   return (
-    <SafeAreaView>
-      <View style={styles.list}>
-        {/* {loading ? (
+    <View style={styles.list}>
+      {/* {loading ? (
         <ActivityIndicator />
       ) : ( */}
-        <FlatList
-          data={postsContext.postObj}
-          renderItem={({item}) => <RenderItem item={item} />}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={renderSeparator}
-        />
-      </View>
-    </SafeAreaView>
+      <FlatList
+        data={postsContext.postObj}
+        renderItem={({item}) => <RenderItem item={item} />}
+        keyExtractor={(item, index) => index.toString()}
+        ItemSeparatorComponent={renderSeparator}
+      />
+    </View>
   );
 }
 

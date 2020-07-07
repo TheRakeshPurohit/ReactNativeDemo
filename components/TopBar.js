@@ -1,42 +1,39 @@
 import React, {useState} from 'react';
 import {StyleSheet, Modal, View, Image, TouchableOpacity} from 'react-native';
 import SearchModal from './SearchModal';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 function TopBar({navigation}) {
   const [modalOpen, setModalOpen] = useState(false);
   return (
-    <SafeAreaView>
-      <View style={styles.TopBar}>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={modalOpen}
-          onRequestClose={() => {
-            setModalOpen(!modalOpen);
-          }}>
-          <SearchModal navigation={navigation} />
-        </Modal>
+    <View style={styles.TopBar}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalOpen}
+        onRequestClose={() => {
+          setModalOpen(!modalOpen);
+        }}>
+        <SearchModal navigation={navigation} />
+      </Modal>
+      <Image
+        style={styles.profile}
+        source={{uri: 'https://randomuser.me/api/portraits/men/2.jpg'}}
+      />
+      <TouchableOpacity
+        style={styles.btnsearch}
+        onPress={() => setModalOpen(!modalOpen)}>
         <Image
-          style={styles.profile}
-          source={{uri: 'https://randomuser.me/api/portraits/men/2.jpg'}}
+          style={styles.btnimg}
+          source={require('../assets/images/search.png')}
         />
-        <TouchableOpacity
-          style={styles.btnsearch}
-          onPress={() => setModalOpen(!modalOpen)}>
-          <Image
-            style={styles.btnimg}
-            source={require('../assets/images/search.png')}
-          />
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   profile: {
-    width: '15%',
+    width: '10%',
     height: '100%',
     //backgroundColor: 'blue',
     resizeMode: 'contain',
@@ -56,7 +53,7 @@ const styles = StyleSheet.create({
   },
   TopBar: {
     width: '100%',
-    height: '18%',
+    height: '5%',
     alignContent: 'stretch',
     justifyContent: 'space-between',
     flexDirection: 'row',

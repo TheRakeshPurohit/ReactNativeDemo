@@ -1,17 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 function Title() {
   return (
-    <SafeAreaView>
-      <View style={styles.title}>
-        <Text style={styles.h1}> Today's Schedule</Text>
-        <Text style={styles.h2}>
-          {new Date(Date.now()).toLocaleDateString()}
-        </Text>
-      </View>
-    </SafeAreaView>
+    <View style={styles.title}>
+      <Text style={styles.h1}> Today's Schedule</Text>
+      <Text style={styles.h2}>{new Date(Date.now()).toLocaleDateString()}</Text>
+    </View>
   );
 }
 

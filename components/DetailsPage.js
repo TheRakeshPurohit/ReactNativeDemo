@@ -6,7 +6,7 @@ import EditTitle from './EditTitle';
 import EditMiddle from './EditMiddle';
 //import EditBottom from './EditBottom';
 
-const DetailsPage = ({navigation}) => {
+function DetailsPage({navigation}) {
   return (
     <SafeAreaView>
       <View style={styles.DetailsPage}>
@@ -26,7 +26,7 @@ const DetailsPage = ({navigation}) => {
       </View>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   DetailsPage: {
