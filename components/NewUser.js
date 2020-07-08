@@ -68,7 +68,9 @@ function NewUser({navigation}) {
             />
           </View>
           <View>
-            <TouchableOpacity onPress={managePasswordVisibility}>
+            <TouchableOpacity
+              style={styles.img}
+              onPress={managePasswordVisibility}>
               <Image
                 style={styles.eye}
                 source={
@@ -121,6 +123,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
   },
+  img: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'blue',
+  },
   bottomline: {
     textAlign: 'center',
     fontStyle: 'italic',
@@ -171,7 +178,8 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 100,
     alignSelf: 'center',
-    marginTop: '20%',
+    marginTop: '10%',
+    marginBottom: '10%',
     color: '#D288A0',
   },
 });
