@@ -135,7 +135,8 @@ const styles = StyleSheet.create({
   eye: {
     //backgroundColor: 'red',
     tintColor: 'black',
-    marginTop: '24%',
+    marginTop: '23%',
+    marginRight: '2%',
     width: 40,
     height: 40,
     resizeMode: 'cover',
