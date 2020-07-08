@@ -124,9 +124,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   img: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'blue',
+    //backgroundColor: 'blue',
+    //resizeMode: 'contain',
   },
   bottomline: {
     textAlign: 'center',
@@ -134,11 +133,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   eye: {
-    width: '10%',
-    backgroundColor: 'red',
-    height: '30%',
+    //backgroundColor: 'red',
     tintColor: 'black',
-    resizeMode: 'contain',
+    marginTop: '24%',
+    width: 40,
+    height: 40,
+    resizeMode: 'cover',
   },
   submittext: {
     margin: 5,
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
   inputpass: {
     backgroundColor: '#DADADA',
     borderRadius: 9,
+    justifyContent: 'space-between',
     margin: 10,
     height: '10%',
     flexDirection: 'row',
