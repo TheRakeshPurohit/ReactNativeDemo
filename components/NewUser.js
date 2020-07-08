@@ -57,14 +57,16 @@ function NewUser({navigation}) {
           />
         </View>
         <View style={styles.inputpass}>
-          <TextInput
-            placeholder="Password"
-            style={styles.inputbox}
-            name="password"
-            secureTextEntry={hidepassword}
-            value={password}
-            onChangeText={(value) => setPassword(value)}
-          />
+          <View>
+            <TextInput
+              placeholder="Password"
+              style={styles.inputbox}
+              name="password"
+              secureTextEntry={hidepassword}
+              value={password}
+              onChangeText={(value) => setPassword(value)}
+            />
+          </View>
           <View>
             <TouchableOpacity onPress={managePasswordVisibility}>
               <Image
@@ -122,14 +124,14 @@ const styles = StyleSheet.create({
   bottomline: {
     textAlign: 'center',
     fontStyle: 'italic',
-    fontSize: 18,
+    fontSize: 15,
   },
   eye: {
-    width: '50%',
+    width: '10%',
     backgroundColor: 'red',
-    height: '5%',
+    height: '30%',
     tintColor: 'black',
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   },
   submittext: {
     margin: 5,
@@ -159,6 +161,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     fontStyle: 'italic',
+    margin: 5,
   },
   bottomlink: {
     color: '#D288A0',

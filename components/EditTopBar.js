@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 24,
     fontWeight: '200',
-    marginRight: 5,
+    marginRight: 15,
     //backgroundColor: 'blue',
   },
 });
