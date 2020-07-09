@@ -8,6 +8,7 @@ import {
   View,
   Dimensions,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -16,6 +17,9 @@ function NewUser({navigation}) {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [hidepassword, setHidepassword] = useState(true);
+  const [nameError, setNameError] = useState(true);
+  const [passError, setPassError] = useState(true);
+  const [emailError, setEmailError] = useState(true);
 
   const managePasswordVisibility = () => {
     setHidepassword(!hidepassword);
@@ -27,7 +31,41 @@ function NewUser({navigation}) {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.warn(name, email, hidepassword, password);
+    if (nameError === false && passError === false && emailError === false) {
+      console.warn(name, email, hidepassword, password);
+      Alert.alert('Valid!');
+    } else {
+      Alert.alert('Invalid Credentials !');
+    }
+  };
+
+  const checkUsername = (value) => {
+    setName(value);
+    if (value.length >= 5) {
+      setNameError(false);
+    } else {
+      setNameError(true);
+    }
+  };
+
+  const checkEmail = (value) => {
+    setEmail(value);
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (value.match(reg)) {
+      setEmailError(false);
+    } else {
+      setEmailError(true);
+    }
+  };
+
+  const checkPassword = (value) => {
+    setPassword(value);
+    let reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+    if (value.match(reg)) {
+      setPassError(false);
+    } else {
+      setPassError(true);
+    }
   };
 
   return (
@@ -43,9 +81,17 @@ function NewUser({navigation}) {
             placeholder="Username"
             style={styles.inputbox}
             value={name}
-            onChangeText={(value) => setName(value)}
+            maxLength={20}
+            onChangeText={(value) => checkUsername(value)}
           />
         </View>
+        {nameError ? (
+          <Text style={styles.error}>
+            Username requires atleat 5 characters.
+          </Text>
+        ) : (
+          <Text style={styles.success}>Username is available !</Text>
+        )}
         <View style={styles.input}>
           <TextInput
             placeholder="Email"
@@ -53,18 +99,24 @@ function NewUser({navigation}) {
             value={email}
             name="email"
             keyboardType="email-address"
-            onChangeText={(value) => setEmail(value)}
+            onChangeText={(value) => checkEmail(value)}
           />
         </View>
+        {emailError ? (
+          <Text style={styles.error}>Requires Valid Email Address! </Text>
+        ) : (
+          <Text style={styles.success}>Email Address is Valid !</Text>
+        )}
         <View style={styles.inputpass}>
           <View>
             <TextInput
               placeholder="Password"
               style={styles.inputbox}
               name="password"
+              maxLength={20}
               secureTextEntry={hidepassword}
               value={password}
-              onChangeText={(value) => setPassword(value)}
+              onChangeText={(value) => checkPassword(value)}
             />
           </View>
           <View>
@@ -82,6 +134,14 @@ function NewUser({navigation}) {
             </TouchableOpacity>
           </View>
         </View>
+        {passError ? (
+          <Text style={styles.error}>
+            Strong password is combination of atleat 8 chracters, atleat 1
+            special charcater and atleat 1 Capital latter and a number.
+          </Text>
+        ) : (
+          <Text style={styles.success}>Password is accpetable.</Text>
+        )}
         <View style={styles.button}>
           <TouchableOpacity onPress={submitHandler}>
             <Text style={styles.submittext}>Get Started</Text>
@@ -113,6 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#6a097d',
     //fontWeight: 'bold',
+    //backgroundColor: 'black',
   },
   title: {
     textAlign: 'center',
@@ -184,6 +245,16 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     marginBottom: '10%',
     color: '#D288A0',
+  },
+  error: {
+    color: 'red',
+    marginLeft: '5%',
+    fontWeight: 'bold',
+  },
+  success: {
+    color: 'green',
+    marginLeft: '5%',
+    fontWeight: 'bold',
   },
 });
 
