@@ -40,7 +40,7 @@ function NewUser({navigation}) {
         </Text>
         <View style={styles.input}>
           <TextInput
-            placeholder="Name"
+            placeholder="Username"
             style={styles.inputbox}
             value={name}
             onChangeText={(value) => setName(value)}
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
   },
   inputbox: {
     marginHorizontal: 2,
+    marginLeft: '3%',
     marginVertical: 5,
     fontSize: 24,
     color: '#6a097d',
