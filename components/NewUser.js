@@ -76,6 +76,7 @@ function NewUser({navigation}) {
         <Text style={styles.tagline}>
           Provide your information to get started
         </Text>
+        <Text style={styles.label}>Username</Text>
         <View style={styles.input}>
           <TextInput
             placeholder="Username"
@@ -92,6 +93,7 @@ function NewUser({navigation}) {
         ) : (
           <Text style={styles.success}>Username is available !</Text>
         )}
+        <Text style={styles.label}>Email</Text>
         <View style={styles.input}>
           <TextInput
             placeholder="Email"
@@ -107,6 +109,7 @@ function NewUser({navigation}) {
         ) : (
           <Text style={styles.success}>Email Address is Valid !</Text>
         )}
+        <Text style={styles.label}>Password</Text>
         <View style={styles.inputpass}>
           <View>
             <TextInput
@@ -213,14 +216,14 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#DADADA',
     borderRadius: 9,
-    margin: 10,
+    marginHorizontal: 10,
   },
   inputpass: {
     backgroundColor: '#DADADA',
     borderRadius: 9,
     justifyContent: 'space-between',
-    margin: 10,
-    height: '10%',
+    marginHorizontal: 10,
+    height: '8%',
     flexDirection: 'row',
   },
   button: {
@@ -250,11 +253,16 @@ const styles = StyleSheet.create({
     color: 'red',
     marginLeft: '5%',
     fontWeight: 'bold',
+    marginBottom: 5,
   },
   success: {
     color: 'green',
     marginLeft: '5%',
+    marginBottom: 5,
     fontWeight: 'bold',
+  },
+  label: {
+    marginLeft: '5%',
   },
 });
 
